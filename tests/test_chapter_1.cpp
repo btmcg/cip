@@ -19,16 +19,13 @@ TEST_CASE("chapter 1", "[chapter_1]")
 
     SECTION("Triplet Sum")
     {
-        auto triplets = triplet_sum({0, -1, 2, -3, 1});
-        REQUIRE(triplets[0].a == -3);
-        REQUIRE(triplets[0].b == 1);
-        REQUIRE(triplets[0].c == 2);
-        REQUIRE(triplets[1].a == -1);
-        REQUIRE(triplets[1].b == 0);
-        REQUIRE(triplets[1].c == 1);
-
         REQUIRE(triplet_sum({0, -1, 2, -3, 1}) == std::vector<triplet>{{-3, 1, 2}, {-1, 0, 1}});
 
         REQUIRE(triplet_sum({}).empty());
+        REQUIRE(triplet_sum({0}).empty());
+        REQUIRE(triplet_sum({1, -1}).empty());
+        REQUIRE(triplet_sum({0, 0, 0}) == std::vector<triplet>{{0, 0, 0}});
+        REQUIRE(triplet_sum({1, 0, 1}).empty());
+        REQUIRE(triplet_sum({0, 0, 1, -1, 1, -1}) == std::vector<triplet>{{-1, 0, 1}});
     }
 }

@@ -1,4 +1,5 @@
 #include <algorithm> // std::sort
+#include <tuple>
 #include <utility> // std::pair
 #include <vector>
 
@@ -40,11 +41,7 @@ pair_sum_sorted(std::vector<int> const& nums, int target)
 // no such triplets are found, return an empty array.
 std::vector<std::pair<int, int>> pair_sum_sorted_all_pairs(
         std::vector<int> const& nums, int start, int target);
-
-struct triplet
-{
-    int a, b, c;
-};
+using triplet = std::tuple<int, int, int>;
 std::vector<triplet>
 triplet_sum(std::vector<int> const& nums)
 {
@@ -66,8 +63,7 @@ triplet_sum(std::vector<int> const& nums)
         // find all pairs that sum to a target of '-a' (-sorted_nums[i])
         auto pairs = pair_sum_sorted_all_pairs(sorted_nums, i + 1, -sorted_nums[i]);
         for (auto& pair : pairs) {
-            triplet t{sorted_nums[i], pair.first, pair.second};
-            triplets.emplace_back(t);
+            triplets.push_back({sorted_nums[i], pair.first, pair.second});
         }
     }
     return triplets;
