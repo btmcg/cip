@@ -95,4 +95,3 @@ pair_sum_sorted_all_pairs(std::vector<int> const& nums, int start, int target)
 
     return pairs;
 }
-
