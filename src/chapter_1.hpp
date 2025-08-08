@@ -79,7 +79,7 @@ pair_sum_sorted_all_pairs(std::vector<int> const& nums, int start, int target)
     while (left < right) {
         int sum = nums[left] + nums[right];
         if (sum == target) {
-            pairs.emplace_back(std::pair{nums[left], nums[right]});
+            pairs.push_back({nums[left], nums[right]});
             ++left;
             // to avoid duplicate '[b, c]' pairs, skip 'b' if it's the
             // same as the previous number
