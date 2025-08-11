@@ -28,4 +28,18 @@ TEST_CASE("chapter 1", "[chapter_1]")
         REQUIRE(triplet_sum({1, 0, 1}).empty());
         REQUIRE(triplet_sum({0, 0, 1, -1, 1, -1}) == std::vector<triplet>{{-1, 0, 1}});
     }
+
+    SECTION("Is Palindrome Valid")
+    {
+        REQUIRE(is_palindrome_valid("a dog! a panic  in a pagoda."));
+        REQUIRE_FALSE(is_palindrome_valid("abc123"));
+        REQUIRE(is_palindrome_valid(""));
+        REQUIRE(is_palindrome_valid("a"));
+        REQUIRE(is_palindrome_valid("aa"));
+        REQUIRE_FALSE(is_palindrome_valid("ab"));
+        REQUIRE(is_palindrome_valid("!, (?)"));
+        REQUIRE(is_palindrome_valid("12.02.2021"));
+        REQUIRE_FALSE(is_palindrome_valid("21.02.2021"));
+        REQUIRE_FALSE(is_palindrome_valid("hello, world!"));
+    }
 }

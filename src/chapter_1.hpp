@@ -1,4 +1,6 @@
 #include <algorithm> // std::sort
+#include <cctype>    // std::isalnum
+#include <string>
 #include <tuple>
 #include <utility> // std::pair
 #include <vector>
@@ -94,4 +96,34 @@ pair_sum_sorted_all_pairs(std::vector<int> const& nums, int start, int target)
     }
 
     return pairs;
+}
+
+// Given a string, determine if it's a palindrome after removing all
+// non-alphanumeric characters. A character is alphanumeric if it's
+// either a letter or a number.
+bool
+is_palindrome_valid(std::string const& s)
+{
+    int left = 0;
+    int right = s.size() - 1;
+
+    while (left < right) {
+        // skip non-alphanumeric characters from the left
+        while (left < right && !std::isalnum(s[left])) {
+            ++left;
+        }
+        // skip non-alphanumeric characters from the left
+        while (left < right && !std::isalnum(s[right])) {
+            --right;
+        }
+        // if the characters at the left and right pointers don't match,
+        // the string is not a palindrome
+        if (s[left] != s[right]) {
+            return false;
+        }
+        ++left;
+        --right;
+    }
+
+    return true;
 }
