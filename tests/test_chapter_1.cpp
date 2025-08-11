@@ -42,4 +42,15 @@ TEST_CASE("chapter 1", "[chapter_1]")
         REQUIRE_FALSE(is_palindrome_valid("21.02.2021"));
         REQUIRE_FALSE(is_palindrome_valid("hello, world!"));
     }
+
+    SECTION("Largest Container")
+    {
+        REQUIRE(largest_container({2, 7, 8, 3, 7, 6}) == 24);
+        REQUIRE(largest_container({}) == 0);
+        REQUIRE(largest_container({1}) == 0);
+        REQUIRE(largest_container({0, 1, 0}) == 0);
+        REQUIRE(largest_container({3, 3, 3, 3}) == 9);
+        REQUIRE(largest_container({1, 2, 3}) == 2);
+        REQUIRE(largest_container({3, 2, 1}) == 2);
+    }
 }
