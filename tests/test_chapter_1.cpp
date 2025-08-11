@@ -104,4 +104,12 @@ TEST_CASE("chapter 1", "[chapter_1]")
             REQUIRE(arr == std::vector{1, 1, 1, 0, 0});
         }
     }
+
+    SECTION("Next Lexicographical Sequence") {
+        REQUIRE(next_lexicographical_sequence("abcd") == "abdc");
+        REQUIRE(next_lexicographical_sequence("dcba") == "abcd");
+        REQUIRE(next_lexicographical_sequence("a") == "a");
+        REQUIRE(next_lexicographical_sequence("aaaa") == "aaaa");
+        REQUIRE(next_lexicographical_sequence("ynitsed") == "ynsdeit");
+    }
 }

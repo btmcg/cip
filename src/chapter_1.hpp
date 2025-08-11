@@ -1,9 +1,9 @@
 #include <algorithm> // std::sort
 #include <cctype>    // std::isalnum
+#include <print>
 #include <string>
 #include <tuple>
 #include <utility> // std::pair
-#include <print>
 #include <vector>
 
 
@@ -134,7 +134,9 @@ is_palindrome_valid(std::string const& s)
 // vertical line on a graph. A container can be formed with any pair of
 // these lines, along with the x-axis of the graph. Return the amount of
 // water which the largest container can hold.
-int largest_container(std::vector<int> const& heights) {
+int
+largest_container(std::vector<int> const& heights)
+{
     int max_water = 0;
     int left = 0;
     int right = heights.size() - 1;
@@ -164,7 +166,9 @@ int largest_container(std::vector<int> const& heights) {
 // Given an array of integers, modify the array in place to move all
 // zeroes to the end while maintaining the relative order of all
 // non-zero elements.
-void shift_zeroes_to_the_end(std::vector<int>& nums) {
+void
+shift_zeroes_to_the_end(std::vector<int>& nums)
+{
     // the left pointer is used to position non-zero elements
     int left = 0;
 
@@ -178,4 +182,42 @@ void shift_zeroes_to_the_end(std::vector<int>& nums) {
             ++left;
         }
     }
+}
+
+// Next Lexicographical Sequence
+std::string
+next_lexicographical_sequence(std::string const& str)
+{
+    std::string letters = str;
+
+    // locate the pivot, which is the first character from the right
+    // that breaks non-increasing order. start searching from the
+    // second-to-last position, since the last character is neither
+    // increasing nor decreasing
+    int pivot = letters.size() - 2;
+    while (pivot >= 0 && letters[pivot] >= letters[pivot + 1]) {
+        --pivot;
+    }
+
+    // if pivot is not found, the string is already in its largest
+    // permutation. in this case, reverse the string to obtain the
+    // smallest permutation
+    if (pivot == -1) {
+        std::reverse(letters.begin(), letters.end());
+        return letters;
+    }
+
+    // find the right-most successor to the pivot
+    int rightmost_successor = letters.size() - 1;
+    while (letters[rightmost_successor] <= letters[pivot]) {
+        --rightmost_successor;
+    }
+
+    // swap the rightmost successor with the pivot to increase the
+    // lexicographical order of the suffix
+    std::swap(letters[pivot], letters[rightmost_successor]);
+
+    // reverse the suffix after the pivot to minimize its permutationa
+    std::reverse(letters.begin() + pivot + 1, letters.end());
+    return letters;
 }
