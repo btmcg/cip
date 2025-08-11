@@ -3,6 +3,7 @@
 #include <string>
 #include <tuple>
 #include <utility> // std::pair
+#include <print>
 #include <vector>
 
 
@@ -157,4 +158,24 @@ int largest_container(std::vector<int> const& heights) {
         }
     }
     return max_water;
+}
+
+// Shift Zeroes to the End
+// Given an array of integers, modify the array in place to move all
+// zeroes to the end while maintaining the relative order of all
+// non-zero elements.
+void shift_zeroes_to_the_end(std::vector<int>& nums) {
+    // the left pointer is used to position non-zero elements
+    int left = 0;
+
+    // iterate through the array using a 'right' pointer to locate
+    // non-zero elements
+    for (std::size_t right = 0; right < nums.size(); ++right) {
+        if (nums[right] != 0) {
+            std::swap(nums[left], nums[right]);
+            // increment 'left' since it now points to a position
+            // already occupied by a non-zero element
+            ++left;
+        }
+    }
 }

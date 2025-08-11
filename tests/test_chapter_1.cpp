@@ -53,4 +53,55 @@ TEST_CASE("chapter 1", "[chapter_1]")
         REQUIRE(largest_container({1, 2, 3}) == 2);
         REQUIRE(largest_container({3, 2, 1}) == 2);
     }
+
+    SECTION("Shift Zeroes to the End")
+    {
+        {
+            std::vector<int> arr{0, 1, 0, 3, 2};
+            shift_zeroes_to_the_end(arr);
+            REQUIRE(arr == std::vector{1, 3, 2, 0, 0});
+        }
+
+        {
+            std::vector<int> arr;
+            shift_zeroes_to_the_end(arr);
+            REQUIRE(arr == std::vector<int>{});
+        }
+
+        {
+            std::vector<int> arr{0};
+            shift_zeroes_to_the_end(arr);
+            REQUIRE(arr == std::vector{0});
+        }
+
+        {
+            std::vector<int> arr{1};
+            shift_zeroes_to_the_end(arr);
+            REQUIRE(arr == std::vector{1});
+        }
+
+        {
+            std::vector<int> arr{0, 0, 0};
+            shift_zeroes_to_the_end(arr);
+            REQUIRE(arr == std::vector{0, 0, 0});
+        }
+
+        {
+            std::vector<int> arr{1, 3, 2};
+            shift_zeroes_to_the_end(arr);
+            REQUIRE(arr == std::vector{1, 3, 2});
+        }
+
+        {
+            std::vector<int> arr{1, 1, 1, 0, 0};
+            shift_zeroes_to_the_end(arr);
+            REQUIRE(arr == std::vector{1, 1, 1, 0, 0});
+        }
+
+        {
+            std::vector<int> arr{0, 0, 1, 1, 1};
+            shift_zeroes_to_the_end(arr);
+            REQUIRE(arr == std::vector{1, 1, 1, 0, 0});
+        }
+    }
 }
