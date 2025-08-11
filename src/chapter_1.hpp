@@ -38,6 +38,7 @@ pair_sum_sorted(std::vector<int> const& nums, int target)
     return {};
 }
 
+// Triplet Sum
 // Given an array of integers, return all triplets [a, b, c] such that
 // a + b + c = 0. The solution must not contain duplicate triplets
 // (e.g., [1, 2, 3] and [2, 3, 1] are considered duplicate triplets). If
@@ -99,6 +100,7 @@ pair_sum_sorted_all_pairs(std::vector<int> const& nums, int start, int target)
     return pairs;
 }
 
+// Is Palindrome Valid
 // Given a string, determine if it's a palindrome after removing all
 // non-alphanumeric characters. A character is alphanumeric if it's
 // either a letter or a number.
@@ -185,6 +187,11 @@ shift_zeroes_to_the_end(std::vector<int>& nums)
 }
 
 // Next Lexicographical Sequence
+// Given a string of lowercase English letters, rearrange the characters
+// to form a new string representing the next immediate sequence in
+// lexicographical (alphabetical) order. If the given string is already
+// last in lexicographical order among all possible arrangements, return
+// the arrangement that's first in lexicographical order.
 std::string
 next_lexicographical_sequence(std::string const& str)
 {

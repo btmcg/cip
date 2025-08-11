@@ -105,7 +105,8 @@ TEST_CASE("chapter 1", "[chapter_1]")
         }
     }
 
-    SECTION("Next Lexicographical Sequence") {
+    SECTION("Next Lexicographical Sequence")
+    {
         REQUIRE(next_lexicographical_sequence("abcd") == "abdc");
         REQUIRE(next_lexicographical_sequence("dcba") == "abcd");
         REQUIRE(next_lexicographical_sequence("a") == "a");
