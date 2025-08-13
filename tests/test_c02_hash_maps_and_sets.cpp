@@ -3,8 +3,10 @@
 
 TEST_CASE("chapter 2", "[chapter_2]")
 {
-    SECTION("TODO")
+    SECTION("Pair Sum - Unsorted")
     {
-        REQUIRE(true);
+        auto result = pair_sum_unsorted({-1, 3, 4, 2}, 3);
+        REQUIRE(result.size() == 1);
+        REQUIRE(result[0] == std::pair{0, 2});
     }
 }
