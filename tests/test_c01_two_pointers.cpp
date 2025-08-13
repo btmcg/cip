@@ -1,4 +1,4 @@
-#include "chapter_1.hpp"
+#include "c01_two_pointers.hpp"
 #include <catch2/catch_test_macros.hpp>
 
 TEST_CASE("chapter 1", "[chapter_1]")

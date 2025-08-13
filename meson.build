@@ -87,7 +87,8 @@ executable('cip',
 
 if catch2_dep.found()
   test_files = [
-    'tests/test_chapter_1.cpp', 
+    'tests/test_c01_two_pointers.cpp', 
+    'tests/test_c02_hash_maps_and_sets.cpp', 
   ]
 
   # create test executables for each test file
