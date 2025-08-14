@@ -56,15 +56,12 @@ verify_sudoku_board(std::vector<std::vector<int>> const& board)
             // check if num has been seen in the current row, column, or
             // subgrid
             if (row_sets[r].contains(num)) {
-                std::println("row {}", r);
                 return false;
             }
             if (col_sets[c].contains(num)) {
-                std::println("col {}", r);
                 return false;
             }
             if (subgrid_sets[r / 3][c / 3].contains(num)) {
-                std::println("subgrid[{}][{}], num={}", r / 3, c / 3, num);
                 return false;
             }
 
@@ -76,4 +73,111 @@ verify_sudoku_board(std::vector<std::vector<int>> const& board)
         }
     }
     return true;
+}
+
+// Zero Striping
+// For each zero in an m x n matrix, set its entire row and column to
+// zero in place.
+void
+zero_striping_hash_sets(std::vector<std::vector<int>>& matrix)
+{
+    if (matrix.empty() || matrix[0].empty()) {
+        return;
+    }
+
+    std::unordered_set<int> zero_rows;
+    std::unordered_set<int> zero_cols;
+
+    std::size_t m = matrix.size();
+    std::size_t n = matrix[0].size();
+
+    // Pass 1: Traverse through the matrix to identify the rows and
+    // columns containing zeros and store their indexes in the
+    // appropriate hash sets.
+    for (std::size_t r = 0; r < m; ++r) {
+        for (std::size_t c = 0; c < n; ++c) {
+            if (matrix[r][c] == 0) {
+                zero_rows.emplace(r);
+                zero_cols.emplace(c);
+            }
+        }
+    }
+
+    // Pass 2: Set any cell in the matrix to zero if its row index is in
+    // zero_rows or its column index is in zero_cols.
+    for (std::size_t r = 0; r < m; ++r) {
+        for (std::size_t c = 0; c < n; ++c) {
+            if (zero_rows.contains(r) || zero_cols.contains(c)) {
+                matrix[r][c] = 0;
+            }
+        }
+    }
+}
+
+void
+zero_striping(std::vector<std::vector<int>>& matrix)
+{
+    if (matrix.empty() || matrix[0].empty()) {
+        return;
+    }
+
+    std::size_t m = matrix.size();
+    std::size_t n = matrix[0].size();
+
+    // check if the first row initially contains a zero
+    bool first_row_has_zero = false;
+    for (std::size_t c = 0; c < n; ++c) {
+        if (matrix[0][c] == 0) {
+            first_row_has_zero = true;
+            break;
+        }
+    }
+
+    // check if the first column initially contains a zero
+    bool first_col_has_zero = false;
+    for (std::size_t r = 0; r < m; ++r) {
+        if (matrix[r][0] == 0) {
+            first_col_has_zero = true;
+            break;
+        }
+    }
+
+    // use the first row and column as markers. if an element in the
+    // submatrix is zero, mark its corresponding row and column in the
+    // first row and column as 0.
+    for (std::size_t r = 0; r < m; ++r) {
+        for (std::size_t c = 0; c < n; ++c) {
+            if (matrix[r][c] == 0) {
+                matrix[0][c] = 0;
+                matrix[r][0] = 0;
+            }
+        }
+    }
+
+    // update the submatrix using the markers in the first row and
+    // column
+    for (std::size_t r = 0; r < m; ++r) {
+        for (std::size_t c = 0; c < n; ++c) {
+            if (matrix[0][c] == 0 || matrix[r][0] == 0) {
+                matrix[r][c] = 0;
+            }
+        }
+    }
+
+    // if the first row had a zero initially, set all elments in the
+    // first row to zero
+    if (first_row_has_zero) {
+        for (std::size_t c = 0; c < n; ++c) {
+            matrix[0][c] = 0;
+        }
+    }
+
+    // if the first column had a zero initially, set all elments in the
+    // first column to zero
+    if (first_col_has_zero) {
+        for (std::size_t r = 0; r < m; ++r) {
+            matrix[r][0] = 0;
+        }
+    }
+
 }

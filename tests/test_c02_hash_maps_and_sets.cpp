@@ -50,7 +50,86 @@ TEST_CASE("chapter 2", "[chapter_2]")
             { 0, 3, 0,  0, 0, 8,    2, 5, 0 },
             { 0, 1, 0,  0, 0, 0,    0, 7, 4 },
             { 0, 0, 5,  2, 0, 6,    0, 0, 0 }}));
-
         // clang-format on
+    }
+
+    SECTION("Zero Striping")
+    {
+        {
+            // clang-format off
+            std::vector<std::vector<int>> matrix
+            {
+                {1,   2,  3, 4,   5},
+                {6,   0,  8, 9,  10},
+                {11, 12, 13, 14, 15},
+                {16, 17, 18, 19,  0}
+            };
+            // clang-format on
+            zero_striping_hash_sets(matrix);
+
+            // row 1
+            for (std::size_t r = 1, c = 0; c < matrix[0].size(); ++c) {
+                REQUIRE(matrix[r][c] == 0);
+            }
+
+            // row 3
+            for (std::size_t r = 3, c = 0; c < matrix[0].size(); ++c) {
+                REQUIRE(matrix[r][c] == 0);
+            }
+
+            // col 1
+            for (std::size_t r = 0, c = 1; r < matrix.size(); ++r) {
+                REQUIRE(matrix[r][c] == 0);
+            }
+
+            // col 4
+            for (std::size_t r = 0, c = 4; r < matrix.size(); ++r) {
+                REQUIRE(matrix[r][c] == 0);
+            }
+        }
+
+        {
+            // clang-format off
+            std::vector<std::vector<int>> matrix
+            {
+                {1,   2,  0, 4,   5},
+                {6,   0,  8, 9,  10},
+                {11, 12, 13, 14, 15},
+                {16, 17, 18, 19,  0}
+            };
+            // clang-format on
+            zero_striping(matrix);
+
+            // row 0
+            for (std::size_t r = 0, c = 0; c < matrix[0].size(); ++c) {
+                REQUIRE(matrix[r][c] == 0);
+            }
+
+            // row 1
+            for (std::size_t r = 1, c = 0; c < matrix[0].size(); ++c) {
+                REQUIRE(matrix[r][c] == 0);
+            }
+
+            // row 3
+            for (std::size_t r = 3, c = 0; c < matrix[0].size(); ++c) {
+                REQUIRE(matrix[r][c] == 0);
+            }
+
+            // col 1
+            for (std::size_t r = 0, c = 1; r < matrix.size(); ++r) {
+                REQUIRE(matrix[r][c] == 0);
+            }
+
+            // col 2
+            for (std::size_t r = 0, c = 2; r < matrix.size(); ++r) {
+                REQUIRE(matrix[r][c] == 0);
+            }
+
+            // col 4
+            for (std::size_t r = 0, c = 4; r < matrix.size(); ++r) {
+                REQUIRE(matrix[r][c] == 0);
+            }
+        }
+
     }
 }
