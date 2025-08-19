@@ -3,12 +3,30 @@
 
 TEST_CASE("chapter 3", "[chapter_3]")
 {
-    // SECTION("Pair Sum - Unsorted")
-    // {
-    //     auto result = pair_sum_unsorted({-1, 3, 4, 2}, 3);
-    //     REQUIRE(result.size() == 1);
-    //     REQUIRE(result[0] == std::pair{0, 2});
-    // }
+    SECTION("Linked List Reversal")
+    {
+        list_node<int>* node = new list_node<int>{1, nullptr};
+        node->next = new list_node<int>{2, nullptr};
+        node = node->next;
+        node->next = new list_node<int>{4, nullptr};
+        node = node->next;
+        node->next = new list_node<int>{7, nullptr};
+        node = node->next;
+        node->next = new list_node<int>{3, nullptr};
+
+        auto new_head = linked_list_reversal_iterative(node);
+        REQUIRE(new_head->val == 3);
+        new_head = new_head->next;
+        REQUIRE(new_head->val == 7);
+        new_head = new_head->next;
+        REQUIRE(new_head->val == 4);
+        // new_head = new_head->next;
+        // REQUIRE(new_head->val == 2);
+        // new_head = new_head->next;
+        // REQUIRE(new_head->val == 1);
+        // new_head = new_head->next;
+        // REQUIRE(new_head == nullptr);
+    }
 
     // SECTION("Verify Sudoku Board")
     // {

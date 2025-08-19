@@ -9,11 +9,35 @@
 #include <utility> // std::pair
 #include <vector>
 
+template <typename T>
+struct list_node
+{
+    T val;
+    list_node* next = nullptr;
+};
 
-// // Pair Sum - Unsorted
-// // Given an array of integers, return the indexes of any two numbers
-// // that add up to a target. The order of the indexes in the result
-// // doesn't matter. If no pair is found, return an empty array.
+
+// Linked List Reversal
+// Reverse a singly linked list.
+list_node<int>*
+linked_list_reversal_iterative(list_node<int>* head)
+{
+    list_node<int>* curr_node = head;
+    list_node<int>* prev_node = nullptr;
+
+    // reverse the direction of each node's pointer until 'curr_node' is
+    // nullptr
+    while (curr_node != nullptr) {
+        list_node<int>* next_node = curr_node->next;
+        curr_node->next = prev_node;
+        prev_node = curr_node;
+        curr_node = next_node;
+    }
+    // 'prev_node' will be pointing at the head of the reversed linked
+    // list
+    return prev_node;
+}
+
 // std::vector<std::pair<int, int>>
 // pair_sum_unsorted(std::vector<int> const& nums, int target)
 // {
