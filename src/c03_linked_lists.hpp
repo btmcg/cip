@@ -89,3 +89,38 @@ remove_kth_last_node(list_node<int>* head, int k)
     delete tmp;
     return dummy.next;
 }
+
+// Linked List Intersection
+// Return the node where two singly linked lists intersect. If the
+// linked lists don't intersect, return nullptr;
+list_node<int>*
+linked_list_intersection(list_node<int>* head_a, list_node<int>* head_b)
+{
+    list_node<int>* ptr_a = head_a;
+    list_node<int>* ptr_b = head_b;
+
+    // traverse through list a with 'ptr_a' and list b with 'ptr_b'
+    // until they meet
+    while (ptr_a != ptr_b) {
+        // traverse list a -> list b by first traversing 'ptr_a' and
+        // then, upon reaching the end of list a, continue the traversal
+        // from the head of list b
+        if (ptr_a != nullptr) {
+            ptr_a = ptr_a->next;
+        } else {
+            ptr_a = head_b;
+        }
+
+        // simultaneously, traverse list b -> list a
+        if (ptr_b != nullptr) {
+            ptr_b = ptr_b->next;
+        } else {
+            ptr_b = head_a;
+        }
+    }
+
+    // at this point, 'ptr_a' and 'ptr_b' either point to the
+    // intersection node or both are nullptr if the lists do not
+    // intersect. return either pointer.
+    return ptr_a;
+}
