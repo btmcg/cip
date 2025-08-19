@@ -38,6 +38,23 @@ linked_list_reversal_iterative(list_node<int>* head)
     return prev_node;
 }
 
+list_node<int>*
+linked_list_reversal_recursive(list_node<int>* head)
+{
+    // base case
+    if (head == nullptr || head->next == nullptr) {
+        return head;
+    }
+    // recursively reverse the sublist starting from the next node
+    list_node<int>* new_head = linked_list_reversal_recursive(head->next);
+    // connect the reversed linked list to the head node to fully
+    // reverse the entire linked list
+    head->next->next = head;
+    head->next = nullptr;
+    return new_head;
+}
+
+
 // std::vector<std::pair<int, int>>
 // pair_sum_unsorted(std::vector<int> const& nums, int target)
 // {

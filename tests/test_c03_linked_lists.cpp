@@ -5,27 +5,56 @@ TEST_CASE("chapter 3", "[chapter_3]")
 {
     SECTION("Linked List Reversal")
     {
-        list_node<int>* node = new list_node<int>{1, nullptr};
-        node->next = new list_node<int>{2, nullptr};
-        node = node->next;
-        node->next = new list_node<int>{4, nullptr};
-        node = node->next;
-        node->next = new list_node<int>{7, nullptr};
-        node = node->next;
-        node->next = new list_node<int>{3, nullptr};
+        // iterative
+        {
+            list_node<int>* head = new list_node<int>{1, nullptr};
+            list_node<int>* node = head;
+            node->next = new list_node<int>{2, nullptr};
+            node = node->next;
+            node->next = new list_node<int>{4, nullptr};
+            node = node->next;
+            node->next = new list_node<int>{7, nullptr};
+            node = node->next;
+            node->next = new list_node<int>{3, nullptr};
 
-        auto new_head = linked_list_reversal_iterative(node);
-        REQUIRE(new_head->val == 3);
-        new_head = new_head->next;
-        REQUIRE(new_head->val == 7);
-        new_head = new_head->next;
-        REQUIRE(new_head->val == 4);
-        // new_head = new_head->next;
-        // REQUIRE(new_head->val == 2);
-        // new_head = new_head->next;
-        // REQUIRE(new_head->val == 1);
-        // new_head = new_head->next;
-        // REQUIRE(new_head == nullptr);
+            auto new_head = linked_list_reversal_iterative(head);
+            REQUIRE(new_head->val == 3);
+            new_head = new_head->next;
+            REQUIRE(new_head->val == 7);
+            new_head = new_head->next;
+            REQUIRE(new_head->val == 4);
+            new_head = new_head->next;
+            REQUIRE(new_head->val == 2);
+            new_head = new_head->next;
+            REQUIRE(new_head->val == 1);
+            new_head = new_head->next;
+            REQUIRE(new_head == nullptr);
+        }
+        // recursive
+        {
+            list_node<int>* head = new list_node<int>{1, nullptr};
+            list_node<int>* node = head;
+            node->next = new list_node<int>{2, nullptr};
+            node = node->next;
+            node->next = new list_node<int>{4, nullptr};
+            node = node->next;
+            node->next = new list_node<int>{7, nullptr};
+            node = node->next;
+            node->next = new list_node<int>{3, nullptr};
+
+            auto new_head = linked_list_reversal_recursive(head);
+            REQUIRE(new_head->val == 3);
+            new_head = new_head->next;
+            REQUIRE(new_head->val == 7);
+            new_head = new_head->next;
+            REQUIRE(new_head->val == 4);
+            new_head = new_head->next;
+            REQUIRE(new_head->val == 2);
+            new_head = new_head->next;
+            REQUIRE(new_head->val == 1);
+            new_head = new_head->next;
+            REQUIRE(new_head == nullptr);
+        }
     }
 
     // SECTION("Verify Sudoku Board")
