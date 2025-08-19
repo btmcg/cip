@@ -130,6 +130,17 @@ TEST_CASE("chapter 2", "[chapter_2]")
                 REQUIRE(matrix[r][c] == 0);
             }
         }
+    }
 
+    SECTION("Longest Chain of Consecutive Numbers")
+    {
+        REQUIRE(longest_chain_of_consecutive_numbers({1, 6, 2, 5, 8, 7, 10, 3}) == 4);
+        REQUIRE(longest_chain_of_consecutive_numbers({}) == 0);
+    }
+
+    SECTION("Geometric Sequence Triplets")
+    {
+        REQUIRE(geometric_sequence_triplets({2, 1, 2, 4, 8, 8}, 2) == 5);
+        REQUIRE(geometric_sequence_triplets({}, 2) == 0);
     }
 }

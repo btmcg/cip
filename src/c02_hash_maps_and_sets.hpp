@@ -179,5 +179,86 @@ zero_striping(std::vector<std::vector<int>>& matrix)
             matrix[r][0] = 0;
         }
     }
+}
 
+// Longest Chain of Consecutive Numbers
+// Find the longest chain of consecutive numbers in an array. Two
+// numbers are consecutive if they have a difference of 1.
+int
+longest_chain_of_consecutive_numbers(std::vector<int> const& nums)
+{
+    if (nums.empty()) {
+        return 0;
+    }
+
+    std::unordered_set<int> set;
+    for (auto num : nums) {
+        set.emplace(num);
+    }
+    int longest_chain = 0;
+    for (auto num : set) {
+        // If the current number is the smallest number in its chain,
+        // search for the length of its chain.
+        if (!set.contains(num - 1)) {
+            int current_num = num;
+            int current_chain = 1;
+
+            // continue to find the next consecutive numbers in the
+            // chain
+            while (set.contains(current_num + 1)) {
+                ++current_num;
+                ++current_chain;
+            }
+
+            longest_chain = std::max(longest_chain, current_chain);
+        }
+    }
+
+    return longest_chain;
+}
+
+// Geometric Sequence Triplets
+// A geometric sequence triplet is a sequence of three numbers where
+// each successive number is obtained by multiplying the preceding
+// number by a constant called the common ratio.
+// Let's examine three triplets to understand how this works:
+//      (1, 2, 4): geometric sequence with a ratio of 2 (i.e.,
+//          [1, 1*2=2, 2*2=4])
+//      (5, 15, 45): geometric sequence with a ratio of 3 (i.e.,
+//          [5, 5*3=15, 15*3=45])
+//      (2, 3, 4): not a geometric sequence
+// Given an array of integers and a common ratio r, find all triplets of
+// indexes (i, j, k) that follow a geometric sequence for i<j<k. It's
+// possible to encounter duplicate triplets in the array.
+int
+geometric_sequence_triplets(std::vector<int> const& nums, int r)
+{
+    std::unordered_map<int, int> left_map;
+    std::unordered_map<int, int> right_map;
+    int count = 0;
+
+    // populate right_map with the frequency of each element in the
+    // array
+    for (auto x : nums) {
+        ++right_map[x];
+    }
+
+    // search for geometric triplets that have x as the center
+    for (auto x : nums) {
+        // decrement the frequency of x in 'right_map' since x is now
+        // being processed and is no longer to the right
+        right_map[x] -= 1;
+
+        if (x % r == 0) {
+            int left = left_map.contains(x / r) ? left_map[x / r] : 0;
+            int right = right_map.contains(x * r) ? right_map[x * r] : 0;
+            count += left * right;
+        }
+
+        // increment the frequency of x in 'left_map' since it'll be a
+        // part of the left side of the array once we iterate to the
+        // next value of x.
+        ++left_map[x];
+    }
+    return count;
 }
