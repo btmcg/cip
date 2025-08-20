@@ -121,4 +121,31 @@ TEST_CASE("chapter 3", "[chapter_3]")
         REQUIRE(cache.get(4) == 300);
         REQUIRE(cache.get(1) == -1);
     }
+
+    SECTION("Palindromic Linked List")
+    {
+        {
+            list_node<int>* head = new list_node<int>{1, nullptr};
+            list_node<int>* node = head;
+            node->next = new list_node<int>{2, nullptr};
+            node = node->next;
+            node->next = new list_node<int>{3, nullptr};
+            node = node->next;
+            node->next = new list_node<int>{2, nullptr};
+            node = node->next;
+            node->next = new list_node<int>{1, nullptr};
+            REQUIRE(palindromic_linked_list(head));
+        }
+
+        {
+            list_node<int>* head = new list_node<int>{1, nullptr};
+            list_node<int>* node = head;
+            node->next = new list_node<int>{2, nullptr};
+            node = node->next;
+            node->next = new list_node<int>{1, nullptr};
+            node = node->next;
+            node->next = new list_node<int>{2, nullptr};
+            REQUIRE_FALSE(palindromic_linked_list(head));
+        }
+    }
 }

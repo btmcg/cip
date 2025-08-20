@@ -136,7 +136,6 @@ linked_list_intersection(list_node<int>* head_a, list_node<int>* head_b)
 //      cache. If adding the key would result in the cache exceeding its
 //      size capacity, evict the least recently used element. If the key
 //      already exists in the cache, update its value.
-
 struct doubly_linked_list_node
 {
     int key;
@@ -221,3 +220,41 @@ private:
         node->next->prev = node->prev;
     }
 };
+
+// Palindromic Linked List
+// Given the head of a singly linked list, determine if it's a
+// palindrome.
+list_node<int>*
+find_middle(list_node<int>* head)
+{
+    auto* slow = head;
+    auto* fast = head;
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+}
+
+bool
+palindromic_linked_list(list_node<int>* head)
+{
+    // find the middle of the linked list and then reverse the second
+    // half of the linked list starting at this midpoint
+    auto* mid = find_middle(head);
+    auto* second_head = linked_list_reversal_recursive(mid);
+
+    // compare the first half and reversed second half of the linked
+    // list
+    auto* ptr1 = head;
+    auto* ptr2 = second_head;
+    bool result = true;
+    while (ptr2 != nullptr) {
+        if (ptr1->val != ptr2->val) {
+            result = false;
+        }
+        ptr1 = ptr1->next;
+        ptr2 = ptr2->next;
+    }
+    return result;
+}
