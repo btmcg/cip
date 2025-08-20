@@ -124,3 +124,100 @@ linked_list_intersection(list_node<int>* head_a, list_node<int>* head_b)
     // intersect. return either pointer.
     return ptr_a;
 }
+
+// LRU Cache
+// Design and implement a data structure for the Least Recently Used
+// (LRU) cache that supports the following operations:
+//      - LRUCache(int capacity) - Initialize an LRU cache with the
+//      specified capacity.
+//      - int get(int key) - Return the value associated with a key.
+//      Return -1 if the key doesn't exist.
+//      - void put(int key, int value) - Add a key and its value to the
+//      cache. If adding the key would result in the cache exceeding its
+//      size capacity, evict the least recently used element. If the key
+//      already exists in the cache, update its value.
+
+struct doubly_linked_list_node
+{
+    int key;
+    int val;
+    doubly_linked_list_node* prev = nullptr;
+    doubly_linked_list_node* next = nullptr;
+};
+
+class lru_cache
+{
+private:
+    std::size_t capacity_;
+    std::unordered_map<int, doubly_linked_list_node*> hash_map_;
+    doubly_linked_list_node* head_ = nullptr;
+    doubly_linked_list_node* tail_ = nullptr;
+
+public:
+    lru_cache(std::size_t capacity)
+            : capacity_(capacity)
+            , hash_map_()
+            , head_(new doubly_linked_list_node{-1, -1})
+            , tail_(new doubly_linked_list_node{-1, -1})
+    {
+        head_->next = tail_;
+        tail_->prev = head_;
+    }
+
+    int
+    get(int key)
+    {
+        auto itr = hash_map_.find(key);
+        if (itr == hash_map_.end()) {
+            return -1;
+        }
+
+        // to make this key the most recently used, remove its node and
+        // re-add it to the tail of the linked list
+        auto& [_, node] = *itr;
+        remove_node(node);
+        add_to_tail(node);
+        return node->val;
+    }
+
+    void
+    put(int key, int value)
+    {
+        // if a node with this key already exists, remove it from the
+        // linked list
+        auto itr = hash_map_.find(key);
+        if (itr != hash_map_.end()) {
+            remove_node(itr->second);
+        }
+        auto* node = new doubly_linked_list_node{key, value};
+        hash_map_.emplace(key, node);
+
+        // remove the least recently used node from the cache if adding
+        // this new node will result in an overflow.
+        if (hash_map_.size() > capacity_) {
+            auto* to_delete = hash_map_[head_->next->key];
+            hash_map_.erase(head_->next->key);
+            remove_node(to_delete);
+            delete to_delete;
+        }
+        add_to_tail(node);
+    }
+
+private:
+    void
+    add_to_tail(doubly_linked_list_node* node)
+    {
+        auto prev_node = tail_->prev;
+        node->prev = prev_node;
+        node->next = tail_;
+        prev_node->next = node;
+        tail_->prev = node;
+    }
+
+    void
+    remove_node(doubly_linked_list_node* node)
+    {
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+    }
+};

@@ -109,4 +109,16 @@ TEST_CASE("chapter 3", "[chapter_3]")
 
         REQUIRE(linked_list_intersection(head_a, head_b)->val == 8);
     }
+
+    SECTION("LRU Cache")
+    {
+        lru_cache cache(3);
+        cache.put(1, 100);
+        cache.put(2, 250);
+        REQUIRE(cache.get(2) == 250);
+        cache.put(4, 300);
+        cache.put(3, 200);
+        REQUIRE(cache.get(4) == 300);
+        REQUIRE(cache.get(1) == -1);
+    }
 }
