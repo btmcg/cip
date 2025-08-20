@@ -148,4 +148,34 @@ TEST_CASE("chapter 3", "[chapter_3]")
             REQUIRE_FALSE(palindromic_linked_list(head));
         }
     }
+
+    SECTION("Flatten Multi-Level Linked List")
+    {
+        // 1 -> 2 -> 3 -> 4 -> 5
+        //      |         |
+        //      6 -> 7    8 -> 9
+        //           |    |
+        //          10   11
+        multi_level_list_node* head = new multi_level_list_node{1, nullptr, nullptr};
+        auto* node = head;
+        node->next = new multi_level_list_node{2, nullptr, nullptr};
+        node = node->next;
+        node->child = new multi_level_list_node{6, nullptr, nullptr};
+        node->child->next = new multi_level_list_node{7, nullptr, nullptr};
+        node->child->next->child = new multi_level_list_node{10, nullptr, nullptr};
+        node->next = new multi_level_list_node{3, nullptr, nullptr};
+        node = node->next;
+        node->next = new multi_level_list_node{4, nullptr, nullptr};
+        node->child = new multi_level_list_node{8, nullptr, nullptr};
+        node->child->next = new multi_level_list_node{9, nullptr, nullptr};
+        node->child->child = new multi_level_list_node{11, nullptr, nullptr};
+        node = node->next;
+        node->next = new multi_level_list_node{5, nullptr, nullptr};
+
+        auto* new_head = flatten_multi_level_list(head);
+        for (int i = 1; i <= 11; ++i) {
+            REQUIRE(new_head->val == i);
+            new_head = new_head->next;
+        }
+    }
 }

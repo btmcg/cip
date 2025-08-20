@@ -258,3 +258,52 @@ palindromic_linked_list(list_node<int>* head)
     }
     return result;
 }
+
+// Flatten Multi-Level List
+// In a multi-level linked list, each node has a next pointer and a
+// child pointer. The next pointer connects to the subsequent node in
+// the same linked list, while the child pointer points to the head of a
+// new linked list under it. This creates multiple levels of linked
+// lists. If a node does not have a child list, its child attribute is
+// set to nullptr.
+//
+// Flatten the multi-level linked list into a single-level linked list
+// by linking the end of each level to the start of the next one.
+struct multi_level_list_node
+{
+    int val = -1;
+    multi_level_list_node* next = nullptr;
+    multi_level_list_node* child = nullptr;
+};
+
+multi_level_list_node*
+flatten_multi_level_list(multi_level_list_node* head)
+{
+    if (head == nullptr) {
+        return nullptr;
+    }
+    auto* tail = head;
+
+    // find the tail of the linked list at the first level
+    while (tail->next != nullptr) {
+        tail = tail->next;
+    }
+
+    auto* curr = head;
+    // Process each node at the current level. If a node has a child
+    // linked list, append it to the tail and then update the tail to
+    // the end of the extended linked list. Continue until all nodes at
+    // the current level are processed.
+    while (curr != nullptr) {
+        if (curr->child != nullptr) {
+            tail->next = curr->child;
+            // disconnect the child linked list from the current node
+            curr->child = nullptr;
+            while (tail->next != nullptr) {
+                tail = tail->next;
+            }
+        }
+        curr = curr->next;
+    }
+    return head;
+}
