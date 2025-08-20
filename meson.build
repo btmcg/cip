@@ -90,6 +90,7 @@ if catch2_dep.found()
     'tests/test_c01_two_pointers.cpp', 
     'tests/test_c02_hash_maps_and_sets.cpp', 
     'tests/test_c03_linked_lists.cpp', 
+    'tests/test_c04_fast_and_slow_pointers.cpp', 
   ]
 
   # create test executables for each test file
