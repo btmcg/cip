@@ -3,59 +3,53 @@
 
 TEST_CASE("chapter 4", "[chapter_4]")
 {
-    // SECTION("Linked List Reversal")
-    // {
-    //     // iterative
-    //     {
-    //         list_node<int>* head = new list_node<int>{1, nullptr};
-    //         list_node<int>* node = head;
-    //         node->next = new list_node<int>{2, nullptr};
-    //         node = node->next;
-    //         node->next = new list_node<int>{4, nullptr};
-    //         node = node->next;
-    //         node->next = new list_node<int>{7, nullptr};
-    //         node = node->next;
-    //         node->next = new list_node<int>{3, nullptr};
+    SECTION("Linked List Loop")
+    {
+        {
+            list_node* head = new list_node{1, nullptr};
+            list_node* node = head;
+            node->next = new list_node{2, nullptr};
+            node = node->next;
+            node->next = new list_node{3, nullptr};
+            node = node->next;
+            node->next = new list_node{4, nullptr};
+            node = node->next;
+            node->next = new list_node{5, nullptr};
 
-    //         auto new_head = linked_list_reversal_iterative(head);
-    //         REQUIRE(new_head->val == 3);
-    //         new_head = new_head->next;
-    //         REQUIRE(new_head->val == 7);
-    //         new_head = new_head->next;
-    //         REQUIRE(new_head->val == 4);
-    //         new_head = new_head->next;
-    //         REQUIRE(new_head->val == 2);
-    //         new_head = new_head->next;
-    //         REQUIRE(new_head->val == 1);
-    //         new_head = new_head->next;
-    //         REQUIRE(new_head == nullptr);
-    //     }
-    //     // recursive
-    //     {
-    //         list_node<int>* head = new list_node<int>{1, nullptr};
-    //         list_node<int>* node = head;
-    //         node->next = new list_node<int>{2, nullptr};
-    //         node = node->next;
-    //         node->next = new list_node<int>{4, nullptr};
-    //         node = node->next;
-    //         node->next = new list_node<int>{7, nullptr};
-    //         node = node->next;
-    //         node->next = new list_node<int>{3, nullptr};
+            REQUIRE_FALSE(linked_list_loop(head));
+        }
 
-    //         auto new_head = linked_list_reversal_recursive(head);
-    //         REQUIRE(new_head->val == 3);
-    //         new_head = new_head->next;
-    //         REQUIRE(new_head->val == 7);
-    //         new_head = new_head->next;
-    //         REQUIRE(new_head->val == 4);
-    //         new_head = new_head->next;
-    //         REQUIRE(new_head->val == 2);
-    //         new_head = new_head->next;
-    //         REQUIRE(new_head->val == 1);
-    //         new_head = new_head->next;
-    //         REQUIRE(new_head == nullptr);
-    //     }
-    // }
+        // delayed cycle
+        {
+            list_node* head = new list_node{1, nullptr};
+            list_node* node = head;
+            node->next = new list_node{2, nullptr};
+            node = node->next;
+            node->next = new list_node{3, nullptr};
+            list_node* node_three = node->next;
+            node = node->next;
+            node->next = new list_node{4, nullptr};
+            node = node->next;
+            node->next = node_three;
+
+            REQUIRE(linked_list_loop(head));
+        }
+
+        // complete cycle
+        {
+            list_node* head = new list_node{1, nullptr};
+            list_node* node = head;
+            node->next = new list_node{2, nullptr};
+            node = node->next;
+            node->next = new list_node{3, nullptr};
+            node = node->next;
+            node->next = new list_node{4, nullptr};
+            node = node->next;
+            node->next = head;
+
+            REQUIRE(linked_list_loop(head));
+        }
+    }
 
     // SECTION("Remove kth Last Node")
     // {
