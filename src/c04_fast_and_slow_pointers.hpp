@@ -20,7 +20,9 @@ struct list_node
 // Given a singly linked list, determine if it contains a cycle. A cycle
 // occurs if a node's next pointer references an earlier node in the
 // list, causing a loop.
-bool linked_list_loop(list_node* head) {
+bool
+linked_list_loop(list_node* head)
+{
     list_node* slow = head;
     list_node* fast = head;
 
@@ -34,4 +36,22 @@ bool linked_list_loop(list_node* head) {
         }
     }
     return false;
+}
+
+// Linked List Midpoint
+// Given a singly linked list, find and return it's middle node. If
+// there are two middle nodes, return the second one.
+list_node*
+linked_list_midpoint(list_node* head)
+{
+    list_node* slow = head;
+    list_node* fast = head;
+
+    // when the fast pointer reaches the end of the list, the slow
+    // pointer willbe at the midpoint of the linked list.
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
 }
