@@ -84,4 +84,10 @@ TEST_CASE("chapter 4", "[chapter_4]")
             REQUIRE(linked_list_midpoint(head)->val == 3);
         }
     }
+
+    SECTION("Happy Number") {
+        REQUIRE_FALSE(happy_number(0));
+        REQUIRE(happy_number(23));
+        REQUIRE_FALSE(happy_number(116));
+    }
 }
