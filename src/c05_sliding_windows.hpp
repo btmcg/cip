@@ -59,3 +59,63 @@ substring_anagrams(std::string const& s, std::string const& t)
     }
     return count;
 }
+
+// Longest Substring With Unique Characters
+// Give a string, determine the length of its longest substring that
+// consists only of unique characters
+int
+longest_substring_with_unique_characters(std::string const& s)
+{
+    int max_len = 0;
+    std::unordered_set<char> hash_set;
+    int left = 0;
+    int right = 0;
+
+    while (static_cast<std::size_t>(right) < s.size()) {
+        // if we encounter a duplicate character in the window, shrink
+        // the window until it's no longer a duplicate
+        while (hash_set.contains(s[right])) {
+            hash_set.erase(s[left]);
+            ++left;
+        }
+
+        // once there are no more duplicates in the window, update
+        // 'max_len' if the corrent window is larger
+        max_len = std::max(max_len, right - left + 1);
+        hash_set.emplace(s[right]);
+
+        // expand the window
+        ++right;
+    }
+    return max_len;
+}
+
+int
+longest_substring_with_unique_characters_optimized(std::string const& s)
+{
+    int max_len = 0;
+    std::unordered_map<char, std::size_t> prev_indexes;
+    int left = 0;
+    int right = 0;
+
+    while (static_cast<std::size_t>(right) < s.size()) {
+        // if a previous index of the current character is present in
+        // the current window, it's a duplicate character in the window
+        if (prev_indexes.contains(s[right])
+                && prev_indexes[s[right]] >= static_cast<std::size_t>(left)) {
+            // shrink the window to exclude the previous occurrence of
+            // this character
+            left = prev_indexes[s[right]] + 1;
+        }
+
+        // update 'max_len' if the current window is larger
+        max_len = std::max(max_len, right - left + 1);
+        prev_indexes[s[right]] = right;
+
+        // expand the window
+        ++right;
+    }
+
+    return max_len;
+}
+
