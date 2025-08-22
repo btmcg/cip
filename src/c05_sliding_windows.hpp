@@ -119,3 +119,45 @@ longest_substring_with_unique_characters_optimized(std::string const& s)
     return max_len;
 }
 
+// Longest Uniform Substring After Replacements
+// A uniform string is one in which all characters are identical. Given
+// a string, determine the length of the longest uniform substring that
+// can be formed by replacing upt to k characters.
+int
+longest_uniform_substring_after_replacements(std::string const& s, int k)
+{
+    std::unordered_map<char, int> freqs;
+    int highest_freq = 0;
+    int max_len = 0;
+    int left = 0;
+    int right = 0;
+
+    while (static_cast<std::size_t>(right) < s.size()) {
+        // update the frequency of the character at the right pointer
+        // and the highest frequency for the current window
+        ++freqs[s[right]];
+        highest_freq = std::max(highest_freq, freqs[s[right]]);
+
+        // calculate replacements needed for the current window
+        int num_chars_to_replace = (right - left + 1) - highest_freq;
+
+        // slide the window if the number of replacements needed exceeds
+        // 'k'. the right pointer always gets advanced, so we just need
+        // to advance 'left'
+        if (num_chars_to_replace > k) {
+            // remove the character at the left pointer from the hash
+            // map before advancing the left pointer
+            --freqs[s[left]];
+            ++left;
+        }
+
+        // since the length of the current window increases or stays the
+        // same, assign the length of the current window to 'max_len'
+        max_len = right - left + 1;
+
+        // expand the window
+        ++right;
+    }
+
+    return max_len;
+}

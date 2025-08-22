@@ -11,7 +11,8 @@ TEST_CASE("chapter 5", "[chapter_5]")
         REQUIRE(substring_anagrams("caabab", "aba") == 2);
     }
 
-    SECTION("Longest Substring With Unique Characters") {
+    SECTION("Longest Substring With Unique Characters")
+    {
         REQUIRE(longest_substring_with_unique_characters("") == 0);
         REQUIRE(longest_substring_with_unique_characters("abcba") == 3);
         REQUIRE(longest_substring_with_unique_characters("cabcdeca") == 5);
@@ -19,5 +20,11 @@ TEST_CASE("chapter 5", "[chapter_5]")
         REQUIRE(longest_substring_with_unique_characters_optimized("") == 0);
         REQUIRE(longest_substring_with_unique_characters_optimized("abcba") == 3);
         REQUIRE(longest_substring_with_unique_characters_optimized("cabcdeca") == 5);
+    }
+
+    SECTION("Longest Uniform Substring After Replacements")
+    {
+        REQUIRE(longest_uniform_substring_after_replacements("", 0) == 0);
+        REQUIRE(longest_uniform_substring_after_replacements("aabcdcca", 2) == 5);
     }
 }
